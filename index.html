@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stick Figure and Waving Tree</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let bodyX = 151; // Initial horizontal position of the body
+        let bodyY = 500; // Vertical position of the body
+        let speedX = 4; // Horizontal speed of the body
+        let legAngle = 0; // Initial angle of the legs
+        let legSpeed = 0.2; // Speed of leg movement
+        let branchAngle = 0; // Angle for branch waving
+
+        function drawStickFigure(x, y) {
+            ctx.save(); // Save the current state
+
+            // Move the entire stick figure
+            ctx.translate(x, y);
+
+            // Draw head
+            ctx.beginPath();
+            ctx.arc(5, -30, 15, 0, Math.PI * 2); // Draw head as a circle
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw body
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 10, 50); // Body rectangle
+
+            // Draw right leg
+            ctx.save(); // Save state before drawing the right leg
+            ctx.translate(5, 50); // Move to the bottom of the body
+            ctx.rotate(Math.sin(legAngle) * 0.5); // Rotate the leg for walking motion
+            ctx.fillRect(0, 0, 5, 40); // Draw leg
+            ctx.restore(); // Restore to the state before drawing the leg
+
+            // Draw left leg
+            ctx.save(); // Save state before drawing the left leg
+            ctx.translate(5, 50); // Move to the bottom of the body
+            ctx.rotate(-Math.sin(legAngle) * 0.5); // Rotate the leg for walking motion in the opposite direction
+            ctx.fillRect(0, 0, 5, 40); // Draw leg
+            ctx.restore(); // Restore to the state before drawing the leg
+
+            // Draw right arm
+            ctx.save(); // Save state before drawing the right arm
+            ctx.translate(5, 10); // Move the origin to the shoulder
+            ctx.rotate(Math.sin(Date.now() / 200) * 0.5); // Rotate the arm
+            ctx.fillRect(0, 0, 5, 30); // Draw arm relative to the shoulder
+            ctx.restore(); // Restore to the state before the arm translation/rotation
+
+            // Draw left arm
+            ctx.save(); // Save state before drawing the left arm
+            ctx.translate(5, 10); // Move the origin to the shoulder
+            ctx.rotate(-Math.sin(Date.now() / 200) * 0.5); // Rotate the arm in the opposite direction
+            ctx.fillRect(0, 0, 5, 30); // Draw arm relative to the shoulder
+            ctx.restore(); // Restore to the state before the arm translation/rotation
+
+            ctx.restore(); // Restore to the original state
+        }
+
+        function drawTree(x, y) {
+            ctx.save(); // Save the current state
+
+            // Move the entire tree
+              ctx.translate(x, y);
+
+            // Draw trunk
+              ctx.fillStyle = 'saddlebrown';
+              ctx.fillRect(-100, 100, 20, 100); // Trunk rectangle
+
+            // Draw left branch 1
+              ctx.save(); // Save state before drawing the left branch
+              ctx.translate(-90, 100); // Move to the top of the trunk
+              ctx.rotate(Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind
+              ctx.fillStyle = 'green';
+              ctx.fillRect(-77, 0, 80, 10); // Draw left branch
+              ctx.restore(); // Restore to the state before drawing the branch
+          
+            // Draw left branch 2
+              ctx.save(); // Save state before drawing the left branch
+              ctx.translate(-90, 100); // Move to the top of the trunk
+              ctx.rotate(Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind
+              ctx.fillStyle = 'green';
+              ctx.fillRect(-77, 15, 80, 10); // Draw left branch
+              ctx.restore(); // Restore to the state before drawing the branch
+            
+            // Draw left branch 3
+              ctx.save(); // Save state before drawing the left branch
+              ctx.translate(-90, 100); // Move to the top of the trunk
+              ctx.rotate(Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind
+              ctx.fillStyle = 'green';
+              ctx.fillRect(-77, 30, 80, 10); // Draw left branch
+              ctx.restore(); // Restore to the state before drawing the branch
+            
+            // Draw left branch 4
+              ctx.save(); // Save state before drawing the left branch
+              ctx.translate(-90, 100); // Move to the top of the trunk
+              ctx.rotate(Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind
+              ctx.fillStyle = 'green';
+              ctx.fillRect(-77, 45, 80, 10); // Draw left branch
+              ctx.restore(); // Restore to the state before drawing the branch
+
+            // Draw right branch 1
+              ctx.save(); // Save state before drawing the right branch
+              ctx.translate(-90, 110); // Move to the top of the trunk
+              ctx.rotate(-Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind in the opposite direction
+              ctx.fillStyle = 'green';
+              ctx.fillRect(0, -10, 80, 10); // Draw right branch
+              ctx.restore(); // Restore to the state before drawing the branch
+          
+            // Draw right branch 2
+              ctx.save(); // Save state before drawing the right branch
+              ctx.translate(-90, 110); // Move to the top of the trunk
+              ctx.rotate(-Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind in the opposite direction
+              ctx.fillStyle = 'green';
+              ctx.fillRect(0, 5, 80, 10); // Draw right branch
+              ctx.restore(); // Restore to the state before drawing the branch
+          
+            // Draw right branch 3
+              ctx.save(); // Save state before drawing the right branch
+              ctx.translate(-90, 110); // Move to the top of the trunk
+              ctx.rotate(-Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind in the opposite direction
+              ctx.fillStyle = 'green';
+              ctx.fillRect(0, 20, 80, 10); // Draw right branch
+              ctx.restore(); // Restore to the state before drawing the branch
+          
+            // Draw right branch 4
+              ctx.save(); // Save state before drawing the right branch
+              ctx.translate(-90, 110); // Move to the top of the trunk
+              ctx.rotate(-Math.sin(branchAngle) * 0.2); // Rotate the branch to simulate wind in the opposite direction
+              ctx.fillStyle = 'green';
+              ctx.fillRect(0, 35, 80, 10); // Draw right branch
+              ctx.restore(); // Restore to the state before drawing the branch
+  
+            ctx.restore(); // Restore to the original state
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            
+            // Draw the stick figure at the current position
+            drawStickFigure(bodyX, bodyY); 
+            
+            // Draw the left tree
+            let treeX = 200;
+            let treeY = 390;
+            drawTree(treeX, treeY); 
+          
+            // Draw the right tree
+            let treeX2 = 600;
+            let treeY2 = 390;
+            drawTree(treeX2, treeY2);
+            
+            // Update the body's horizontal position
+            bodyX += speedX;
+
+            // Reverse direction if the body hits the tree
+            if (bodyX > treeX2 - 100 || bodyX < treeX - 100) {
+                speedX = -speedX; // Change direction
+            }
+
+            // Update the leg angle for the walking animation
+            legAngle += legSpeed;
+
+            // Update the branch angle to simulate waving
+            branchAngle += 0.05;
+
+            requestAnimationFrame(animate); // Continue the animation loop
+        }
+
+        animate(); // Start the animation
+    </script>
+</body>
+</html>
